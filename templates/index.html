@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modelo de Predicción</title>
+</head>
+<body>
+    <h1>Predicción de Iris</h1>
+    <!-- Formulario para ingresar características -->
+    <form id="predictionForm">
+        <label for="feature1">Característica 1:</label>
+        <input type="text" id="feature1" name="feature1" required><br><br>
+
+        <label for="feature2">Característica 2:</label>
+        <input type="text" id="feature2" name="feature2" required><br><br>
+
+        <label for="feature3">Característica 3:</label>
+        <input type="text" id="feature3" name="feature3" required><br><br>
+
+        <label for="feature4">Característica 4:</label>
+        <input type="text" id="feature4" name="feature4" required><br><br>
+
+        <button type="button" onclick="makePrediction()">Predecir</button>
+    </form>
+    <h2>Resultado:</h2>
+    <div id="result"></div>
+
+    <script>
+        function makePrediction() {
+            const form = document.getElementById('predictionForm');
+            const formData = new FormData(form);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = 'Predicción: ' + data.prediction;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
